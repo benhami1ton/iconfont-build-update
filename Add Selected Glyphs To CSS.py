@@ -3,6 +3,7 @@
 # -*- coding: utf-8 -*-
 __doc__="""
 Takes selected glyphs and outputs code for custom CSS classes to insert the new icons
+Instructions: Select Icons in Glyphs application, run code in Macro window, then paste into CSS file.
 """
 lineBreak = '\n'
 glyphname = 'b'
