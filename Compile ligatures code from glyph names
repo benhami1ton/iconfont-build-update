@@ -1,0 +1,31 @@
+#MenuTitle: Compile ligatures code from glyph names
+# -*- coding: utf-8 -*-
+__doc__="""
+Takes selected glyph names and creates liga feature code based on Glyph Names and places on clipboard. 
+For using OT liga features with icon fonts. I'm not savvy enough for actually making the feature via python yet.  
+"""
+
+import GlyphsApp
+from AppKit import *
+
+separator = "\n"
+thisFont = Glyphs.font # frontmost font
+listOfGlyphNames = [ l.parent.name for l in thisFont.selectedLayers ]
+listOfGlyphNames = [ 'sub ' + " ".join(x) + ' by ' + x for x in listOfGlyphNames ] 
+clipboardText = separator.join( listOfGlyphNames )
+
+def setClipboard( myText ):
+	"""
+	Sets the contents of the clipboard to myText.
+	Returns True if successful, False if unsuccessful.
+	"""
+	try:
+		myClipboard = NSPasteboard.generalPasteboard()
+		myClipboard.declareTypes_owner_( [NSStringPboardType], None )
+		myClipboard.setString_forType_( myText, NSStringPboardType )
+		return True
+	except Exception as e:
+		return False
+
+if not setClipboard(clipboardText):
+	print "Warning: could not set clipboard to %s" % ( clipboardText )
